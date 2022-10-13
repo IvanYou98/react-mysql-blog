@@ -6,55 +6,57 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Single from './pages/Single';
 import Write from './pages/Write';
-
+import './style.scss'
 
 
 
 const Layout = () => {
-  <>
-    <Navbar />
-    <Outlet />
-    <Footer />
-  </>
-}
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+      <Footer />
+    </>
+  );
+};
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Layout />,
     children: [
       {
-        path: "/",
-        element: <Home />
+        path: "",
+        element: <Home />,
       },
       {
-        path: "/post/:id",
-        element: <Single />
+        path: "post/:id",
+        element: <Single />,
       },
       {
-        path: "/write",
-        element: <Write />
-      }
-    ]
+        path: "write",
+        element: <Write />,
+      },
+    ],
   },
   {
-    path: '/register',
-    element: <Register />
+    path: "/register",
+    element: <Register />,
   },
   {
-    path: '/login',
-    element: <Login />
-  }
-])
+    path: "/login",
+    element: <Login />,
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      <RouterProvider router={router} />
+    <div className="app">
+      <div className="container">
+        <RouterProvider router={router} />
+      </div>
     </div>
   );
 }
-
-
 
 export default App;
