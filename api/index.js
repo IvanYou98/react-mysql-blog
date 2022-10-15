@@ -3,10 +3,13 @@ import authRouter from './routes/auth.js'
 import userRouter from './routes/users.js'
 import postRouter from './routes/posts.js'
 import { db } from './db.js'
+import cookieParser from "cookie-parser"
 
 const app = express()
 // middlewares
 app.use(express.json())
+app.use(cookieParser())
+
 db.connect()
 
 app.use("/api/auth", authRouter)
