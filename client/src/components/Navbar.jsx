@@ -16,11 +16,14 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="links">
-                    <Link className='link' to='/?category=algo'>
-                        <h6>ALGO</h6>
+                    <Link className='link' to='/?cat=frontend'>
+                        <h6>Frontend</h6>
                     </Link>
-                    <Link className='link' to='/?category=dev'>
-                        <h6>Dev</h6>
+                    <Link className='link' to='/?cat=backend'>
+                        <h6>Backend</h6>
+                    </Link>
+                    <Link className='link' to='/?cat=algo'>
+                        <h6>Algo</h6>
                     </Link>
                     <span>{currentUser?.username}</span>
                     {

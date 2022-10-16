@@ -30,42 +30,43 @@ const modules = {
     },
 }
 
-
-
 const Write = ({ props }) => {
     const navigate = useNavigate();
     const state = useLocation().state;
-    const [content, setContent] = useState();
-    const [title, setTitle] = useState();
+    const [content, setContent] = useState(state?.desc || "");
+    const [title, setTitle] = useState(state?.title || "");
+    const [cat, setCat] = useState(state?.cat || "")
     const [photo, setPhoto] = useState();
 
     const upload = async () => {
-        try {
-            const formData = new FormData();
-            formData.append("file", photo);
-            const res = await axios.post("/upload", formData);
-            return res.data;
-        } catch (err) {
-            console.log(err);
+        if (photo) {
+            try {
+                const formData = new FormData();
+                formData.append("file", photo);
+                const res = await axios.post("/upload", formData);
+                return res.data;
+            } catch (err) {
+                console.log(err);
+            }
         }
     };
 
 
-
-    const handleClick = async (e) => {
+    const handlePublish = async (e) => {
         e.preventDefault();
         const imgUrl = await upload();
-
         try {
             state
-                ? await axios.put(`/posts/${state.id}`, {
+                ? await axios.put(`/post/${state.id}`, {
                     title,
                     desc: content,
-                    img: photo ? imgUrl : "",
+                    cat: cat,
+                    img: photo ? imgUrl : state.img,
                 })
-                : await axios.post(`/posts/`, {
+                : await axios.post(`/post/`, {
                     title,
                     desc: content,
+                    cat: cat,
                     img: photo ? imgUrl : "",
                     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
                 });
@@ -80,6 +81,7 @@ const Write = ({ props }) => {
         <div className='create-post'>
             <div className='content'>
                 <input type="text"
+                    value={title}
                     placeholder='Title'
                     onChange={e => setTitle(e.target.value)}
                 />
@@ -107,34 +109,26 @@ const Write = ({ props }) => {
                         id="file-picker"
                         onChange={e => setPhoto(e.target.files[0])}
                         type="file" />
-                    <label for="file-picker" className='file'>
+                    <label htmlFor="file-picker" className='file'>
                         Upload Image
                     </label>
                     <div className='buttons'>
                         <button>Save as a draft</button>
-                        <button onClick={handleClick}>Publish</button>
+                        <button onClick={handlePublish}>Publish</button>
                     </div>
                 </div>
                 <div className='item'>
                     <h1>Category</h1>
                     <div className='cat'>
-                        <input type="radio" value="dev" id="dev-radio" />
+                        <input type="radio" value="frontend" id="dev-radio" checked={cat === "frontend"} onChange={e => setCat(e.target.value)} />
                         <label htmlFor="dev-radio">Front End</label>
                     </div>
                     <div className='cat'>
-                        <input type="radio" value="algo" id="algo-radio" />
+                        <input type="radio" value="backend" id="algo-radio" checked={cat === "backend"} onChange={e => setCat(e.target.value)} />
                         <label htmlFor="algo-radio">Back End</label>
                     </div>
                     <div className='cat'>
-                        <input type="radio" value="algo" id="algo-radio" />
-                        <label htmlFor="algo-radio">Algo</label>
-                    </div>
-                    <div className='cat'>
-                        <input type="radio" value="algo" id="algo-radio" />
-                        <label htmlFor="algo-radio">Algo</label>
-                    </div>
-                    <div className='cat'>
-                        <input type="radio" value="algo" id="algo-radio" />
+                        <input type="radio" value="algo" id="algo-radio" checked={cat === "algo"} onChange={e => setCat(e.target.value)} />
                         <label htmlFor="algo-radio">Algo</label>
                     </div>
                 </div>

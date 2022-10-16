@@ -161,11 +161,19 @@ button {
                 justify-content: space-between;
 
                 h1 {
-                    font-size: 48px;
+                    font-size: 38px;
                 }
 
-                p{
+                .description{
                     font-size: 18px;
+                    margin-bottom: 20px;
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3; /* number of lines to show */
+                            line-clamp: 3; 
+                    -webkit-box-orient: vertical;
                 }
 
                 button{
@@ -247,6 +255,11 @@ button {
             }
         }
 
+        .editor {
+            margin-top: 20px;
+        }
+
+
         h1 {
             font-size: 42px;
             color: #333;
@@ -321,9 +334,9 @@ button {
         }
 
         .editor-container {
-          height: 300px;
-          overflow: scroll;
+          height: 600px;
           border: 1px solid lightgray;
+          
 
           .editor {
             height: 100%;
@@ -337,6 +350,7 @@ button {
         display: flex;
         flex-direction: column;
         gap: 20px;
+        height: 400px;
 
         .item {
             border: 1px solid lightgray;
